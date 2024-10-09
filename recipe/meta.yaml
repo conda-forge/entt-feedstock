@@ -17,7 +17,7 @@ requirements:
     - {{ compiler("cxx") }}
     - {{ stdlib("c") }}
     - cmake
-    - gtest
+    - gtest  # [build_platform == target_platform]
     - ninja  # [not win]
 
 test:
