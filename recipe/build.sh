@@ -15,7 +15,8 @@ cmake $SRC_DIR \
   -DBUILD_SHARED_LIBS=ON \
   -DCMAKE_BUILD_TYPE=Release \
   -DENTT_BUILD_TESTING=$entt_build_testing \
-  -DENTT_FIND_GTEST_PACKAGE=ON
+  -DENTT_FIND_GTEST_PACKAGE=ON \
+  -DENTT_INSTALL=ON
 
 cmake --build build --parallel
 
