@@ -21,11 +21,24 @@ requirements:
     - ninja  # [not win]
 
 test:
+  requires:
+    - {{ compiler("cxx") }}
+    - {{ stdlib("c") }}
+    - cmake
+    - ninja
+  files:
+    - test_package
   commands:
     - test -d ${PREFIX}/include/entt  # [unix]
     - test -f ${PREFIX}/lib/EnTT/cmake/EnTTTargets.cmake  # [unix]
+    - cmake -S test_package -B test_build -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH=${PREFIX}  # [unix]
+    - cmake --build test_build --config Release  # [unix]
+    - ./test_build/entt_consumer  # [unix]
     - if not exist %PREFIX%\\Library\\include\\entt exit 1  # [win]
     - if not exist %PREFIX%\\Library\\lib\\EnTT\cmake\\EnTTTargets.cmake exit 1  # [win]
+    - cmake -S test_package -B test_build -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH=%LIBRARY_PREFIX%  # [win]
+    - cmake --build test_build --config Release  # [win]
+    - test_build\\entt_consumer.exe  # [win]
 
 about:
   home: https://github.com/skypjack/entt/wiki
