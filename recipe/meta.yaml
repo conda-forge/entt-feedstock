@@ -22,7 +22,6 @@ requirements:
 
 test:
   requires:
-    - {{ compiler("c") }}
     - {{ compiler("cxx") }}
     - {{ stdlib("c") }}
     - cmake
