@@ -1,0 +1,74 @@
+context:
+  name: entt
+  version: "3.16.0"
+
+package:
+  name: ${{ name }}
+  version: ${{ version }}
+
+source:
+  url: https://github.com/skypjack/entt/archive/v${{ version }}.tar.gz
+  sha256: 7d7b4037b737992342049ffab14f22fa10243e01664f8c3a0657aa247ac52f71
+
+build:
+  number: 1
+  script:
+    - if: win
+      then: call "%RECIPE_DIR%\\build.bat"
+    - if: unix
+      then: bash "${RECIPE_DIR}/build.sh"
+
+requirements:
+  build:
+    - ${{ compiler("cxx") }}
+    - ${{ stdlib("c") }}
+    - cmake
+    - if: build_platform == target_platform
+      then: gtest
+    - if: not win
+      then: ninja
+
+tests:
+  - requirements:
+      run:
+        - ${{ compiler("cxx") }}
+        - ${{ stdlib("c") }}
+        - cmake
+        - ninja
+    files:
+      recipe:
+        - test_package/
+    script:
+      - if: unix
+        then:
+          - test -d "${PREFIX}/include/entt"
+          - test -f "${PREFIX}/lib/EnTT/cmake/EnTTTargets.cmake"
+          - cmake -S test_package -B test_build -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH="${PREFIX}"
+          - cmake --build test_build --config Release
+          - ./test_build/entt_consumer
+      - if: win
+        then:
+          - if not exist "%PREFIX%\\Library\\include\\entt" exit 1
+          - if not exist "%PREFIX%\\Library\\lib\\EnTT\\cmake\\EnTTTargets.cmake" exit 1
+          - cmake -S test_package -B test_build -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH=%LIBRARY_PREFIX%
+          - cmake --build test_build --config Release
+          - test_build\\entt_consumer.exe
+
+about:
+  homepage: https://github.com/skypjack/entt/wiki
+  repository: https://github.com/skypjack/entt
+  summary: Gaming meets modern C++ - a fast and reliable entity component system (ECS) and much more
+  description: |
+    `EnTT` is a header-only, tiny and easy to use library for game programming and
+    much more written in **modern C++**.<br/>
+    [Among others](https://github.com/skypjack/entt/wiki/EnTT-in-Action), it's used
+    in [**Minecraft**](https://minecraft.net/en-us/attribution/) by Mojang, the
+    [**ArcGIS Runtime SDKs**](https://developers.arcgis.com/arcgis-runtime/) by Esri
+    and the amazing [**Ragdoll**](https://ragdolldynamics.com/).<br/>
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - jslee02
+    - jeongseok-meta
