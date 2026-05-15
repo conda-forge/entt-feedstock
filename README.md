@@ -9,13 +9,14 @@ Package license: MIT
 
 Summary: Gaming meets modern C++ - a fast and reliable entity component system (ECS) and much more
 
+Development: https://github.com/skypjack/entt
+
 `EnTT` is a header-only, tiny and easy to use library for game programming and
 much more written in **modern C++**.<br/>
 [Among others](https://github.com/skypjack/entt/wiki/EnTT-in-Action), it's used
 in [**Minecraft**](https://minecraft.net/en-us/attribution/) by Mojang, the
 [**ArcGIS Runtime SDKs**](https://developers.arcgis.com/arcgis-runtime/) by Esri
 and the amazing [**Ragdoll**](https://ragdolldynamics.com/).<br/>
-
 
 Current build status
 ====================
