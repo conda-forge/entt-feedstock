@@ -1,6 +1,6 @@
 context:
   name: entt
-  version: "3.16.0"
+  version: "4.0.0"
 
 package:
   name: ${{ name }}
@@ -8,10 +8,10 @@ package:
 
 source:
   url: https://github.com/skypjack/entt/archive/v${{ version }}.tar.gz
-  sha256: 7d7b4037b737992342049ffab14f22fa10243e01664f8c3a0657aa247ac52f71
+  sha256: 32a2ff2c72cb047dfd57306006ef238820b70da7c6ce4e7e8a507ac63365212e
 
 build:
-  number: 1
+  number: 0
   script:
     - if: win
       then: call "%RECIPE_DIR%\\build.bat"
